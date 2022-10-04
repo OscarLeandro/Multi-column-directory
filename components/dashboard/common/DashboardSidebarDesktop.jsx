@@ -1,8 +1,7 @@
-import SidebarDesktopNavigation from "./DesktopNavigation";
-import DesktopSecondaryNavigation from "./DesktopSecondaryNavigation";
+import {classNames} from '../../../lib/Helper'
 
 
-export default function SidebarDesktop({data:user, navigation1:navigation, navigation2:secondaryNavigation}) {
+export default function DashboardSidebarDesktop({user, navigation, secondaryNavigation}) {
   return (
     <div className="hidden lg:flex lg:flex-shrink-0">
         <div className="flex w-64 flex-col">
@@ -19,14 +18,43 @@ export default function SidebarDesktop({data:user, navigation1:navigation, navig
             <nav className="mt-5 flex-1" aria-label="Sidebar">
                 <div className="space-y-1 px-2">
                 {navigation.map((item) => (
-                    <SidebarDesktopNavigation data={item} key={item.name} />
+                    <a
+                    key={item.name}
+                    href={item.href}
+                    className={classNames(
+                      item.current
+                        ? 'bg-gray-200 text-gray-900'
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
+                      'group flex items-center px-2 py-2 text-sm font-medium rounded-md'
+                    )}
+                    aria-current={item.current ? 'page' : undefined}
+                  >
+                    <item.icon
+                      className={classNames(
+                        item.current ? 'text-gray-500' : 'text-gray-400 group-hover:text-gray-500',
+                        'mr-3 flex-shrink-0 h-6 w-6'
+                      )}
+                      aria-hidden="true"
+                    />
+                    {item.name}
+                  </a>
                 ))}
                 </div>
 
                 <hr className="my-5 border-t border-gray-200" aria-hidden="true" />
                 <div className="flex-1 space-y-1 px-2">
                 {secondaryNavigation.map((item) => (
-                    <DesktopSecondaryNavigation data={item} key={item.name} />
+                    <a
+                    key={item.name}
+                    href={item.href}
+                    className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    >
+                    <item.icon
+                        className="mr-3 h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                    />
+                    {item.name}
+                    </a>
                 ))}
                 </div>
             </nav>
